@@ -1,0 +1,120 @@
+<html>
+	<head>
+		<title>Login Page</title>
+	</head>
+	
+<body id="body" background="IIT-Hyderabad-MTech.jpg">
+<style>
+	.menuIdMain {
+		display: none;
+	}
+	.filditem input{
+		border:1px solid #CCCCCC;
+		box-shadow:0 0 3px 0 #F0F0F0 inset;
+		font-size: 13px;
+		height: 30px;
+		padding-left: 5px;
+		width: 335px;
+	}
+	 #type {
+		height: 32px;
+		width: 280px;
+		padding: 4px;
+	} 
+	.sign-in {
+	    width: 335px;
+	    text-align: left;
+	}
+	.signin-box, .accountchooser-box {
+	    background: none repeat scroll 0 0 #F1F1F1;
+	    border: 1px solid #E5E5E5;
+	    margin: 12px 0 0;
+	    padding: 20px 25px 15px;
+		opacity: 0.90;
+		filter:alpha(opacity=90);
+		-khtml-opacity: 0.90;
+	}
+	.signin-box div {
+	    margin: 0 0 1.5em;
+	}
+	.signin-box div {
+	    margin: 0 0 1.5em;
+	}
+	.signin-box .email-label, .signin-box .passwd-label {
+	    -moz-user-select: none;
+	    display: block;
+	    font-weight: bold;
+	    margin: 0 0 0.5em;
+	}
+	.signin-box input[type="email"], .signin-box input[type="text"], .signin-box input[type="password"] {
+	    direction: ltr;
+	    font-size: 15px;
+	    height: 25px;
+	    width: 271px;
+	}
+	.signin-box input[type="submit"],.signin-box input[type="button"] {
+	    font-size: 13px;
+	    height: 25px;
+	    margin: 0 1.5em 1.2em 0;
+	}
+	.fancy {
+		font-family: Cursive;
+		color: red;
+		font-size:90%;
+	}
+	.hidden{
+ 		display:none;
+	}
+	.unhidden{
+		display:block;
+	}
+	#appDiv {
+		text-align: center; 
+		font-weight: bold; 
+		font-size: 18px; 
+		margin-bottom: 5px; 
+		color: #008EBD;
+	}
+</style>
+<div align="center" style="margin-top: 120px;">
+	<div class="sign-in">
+		<div class="signin-box">
+			<div id="appDiv">
+				<span>PAYMENT ROLL MANAGEMENT</span>
+			</div>
+			<form method="post" style="font:font:81.25%/1 arial,helvetica,sans-serif;border: none;" id="loginForm">
+			<div class="filditem">
+				<div class="email-div row">
+					<input type="email" id="uid" placeholder="User Name"/>
+				</div>
+				<div class="passwd-div row">
+  					<input type="password" placeholder="Password" id="pswrd"/>
+				</div>
+			</div>
+			<div class="hidden" id="invalid" >
+				<p class="fancy">Invalid credentials!!!</p>
+			</div>
+			<input type="button" value="Sign in" name="signIn"  onclick="javascript:validate()" style="margin-right: 6px;">
+		 	
+		 	</form>
+		</div>
+	</div>		
+</div>
+<script type="text/javascript">
+function validate()
+{
+    if(   document.getElementById("uid").value == "admin" && document.getElementById("pswrd").value == "admin" )
+    {
+        location.href="run.html";
+    }
+    else
+    {
+        //alert( "Invalid Credentials" );
+        document.getElementById("invalid").className='unhidden';
+	document.getElementById("uid").value='';
+	document.getElementById("pswrd").value=''; 
+    }
+}
+</script>
+</body>	
+</html>
