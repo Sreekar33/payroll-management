@@ -94,7 +94,7 @@
 			<div class="hidden" id="invalid" >
 				<p class="fancy">Invalid credentials!!!</p>
 			</div>
-			<input type="button" value="Sign in" name="signIn"  onclick="javascript:validate()" style="margin-right: 6px;">
+			<input type="button" id="submit" value="Sign in" name="signIn"  onclick="javascript:validate()" style="margin-right: 6px;">
 		 	
 		 	</form>
 		</div>
@@ -105,7 +105,7 @@ function validate()
 {
     if(   document.getElementById("uid").value == "admin" && document.getElementById("pswrd").value == "admin" )
     {
-        location.href="run.html";
+        location.href="admin.html";
     }
     else
     {
@@ -114,7 +114,24 @@ function validate()
 	document.getElementById("uid").value='';
 	document.getElementById("pswrd").value=''; 
     }
+    
 }
+</script>
+<script>
+var input1 = document.getElementById("uid");
+input1.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("submit").click();
+    }
+});
+var input2 = document.getElementById("pswrd");
+input2.addEventListener("keyup", function(event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("submit").click();
+    }
+});
 </script>
 </body>	
 </html>
