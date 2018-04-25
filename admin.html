@@ -1,25 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
+ul {
+    list-style-type: none;
+    margin: 100;
+    padding: 0;
+    overflow: hidden;
+    background-color: #808080;
+}
+li {
+    float: left;
+}
+lj {
+    float : right;
+}
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li b {
+    padding: 14px 16px;
+}
+li a:hover {
+	color:yellow;
+    background-color: black;
+}
+
+
 body {
     font-family: "Lato", sans-serif;
 }
-
 .sidenav {
     height: 100%;
     width: 0;
     position: fixed;
     z-index: 1;
     top: 0;
-    left: 0;
+    left: 1;
     background-color: #111;
     overflow-x: hidden;
     transition: 0.5s;
-    padding-top: 60px;
+    padding-top: 100px;
 }
-
 .sidenav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
@@ -28,11 +55,9 @@ body {
     display: block;
     transition: 0.3s;
 }
-
 .sidenav a:hover {
     color: #f1f1f1;
 }
-
 .sidenav .closebtn {
     position: absolute;
     top: 0;
@@ -40,33 +65,101 @@ body {
     font-size: 36px;
     margin-left: 50px;
 }
-
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+
+
+
 </style>
 </head>
 <body>
 
-<div id="mySidenav" class="sidenav">
-  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-  <a href="#">About</a>
-  <a href="#">Employees</a>
-  <a href="#">salaries</a>
-  <a href="#">Services</a>
-</div>
-<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+<ul>
+  <li><a href="#Add">Add</a></li>
+  <li><a href="#Delete">Delete</a></li>
+  <li><a href="#Viewall">Viewall</a></li>
+  <li><a href="#viewsingle">ViewSingle</a></li>
+  
+  <lj><img  src = 'search.png' style="width:40px;height:40px;" onclick="openNav()"></lj>
+  <lj><input id="mySidenav" type="text" name="q" placeholder="Search" style="width:0px;height:0px;"></lj>
+</ul>
 
 <script>
 function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
-}
-
-function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("mySidenav").style.width = "170px";
+    document.getElementById("mySidenav").style.height = "30px";
 }
 </script>
-     
+
+
+<div style="position: absolute; middle: 50%; margin-left: 250px; width: 750px; height: 550px; background: grey; border: 8px solid black">
+	<div style="position:absolute;middle:50%;margin-left: 200px;">
+		<form action="/my-handling-form-page" method="post" autocomplete="on">	
+			<input type="text" id="name" placeholder="Name" name="user_name">
+    			<br>
+    			<div>
+    			<select id="profession" onchange="data();">
+    				<option selected disabled>--select one--</option>
+    				<option value="Faculty">Faculty</option>
+				<option value="Non-Faculty">Non-faculty</option>
+			</select>
+			</div>
+			
+			<br>
+				<input type="date" id="JoiningDate" value="">
+			<br>
+			<select id="selectLevel" onchange="data1();">
+				<option selected disabled>Choose a number</option>
+			</select>
+			<select id="Initialpay" >
+				<option selected disabled>Choose a number</option>
+			</select>
+			
+			<script>
+			     function data(){
+			     	console.log("onload");
+				var select = document.getElementById("selectLevel"); 
+				if(document.getElementById("profession").value=="Faculty"){
+					var options = ["10", "11", "12", "13A1", "13A2","14","14A"]; 
+				}
+				else if(document.getElementById("profession").value=="Non-Faculty"){
+					var options = ["1", "2", "3", "4", "5"];
+				}
+				select.innerHTML = "<option selected disabled>Choose a number</option>"
+				// Optional: Clear all existing options first:
+			
+				// Populate list with options:
+				for(var i = 0; i < options.length; i++) {
+				    var opt = options[i];
+				    select.innerHTML += "<option value=\"" + opt + "\">" + opt + "</option>";
+				}
+			    }
+			    function data1(){
+			     	console.log("onload1");
+				var select = document.getElementById("Initialpay"); 
+				if(document.getElementById("selectLevel;").value=="10"){
+					var options = []; //fill salaries
+				}
+				else {
+				}
+				select.innerHTML = "<option selected disabled>Choose a number</option>"
+				// Optional: Clear all existing options first:
+			
+				// Populate list with options:
+				for(var i = 0; i < options.length; i++) {
+				    var opt = options[i];
+				    select.innerHTML += "<option value=\"" + opt + "\">" + opt + "</option>";
+				}
+			    }	
+			</script>
+		</form>
+		
+	</div>
+</div>
+
+
 </body>
-</html> 
+</html>
+
