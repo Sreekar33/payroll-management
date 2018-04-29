@@ -1,9 +1,13 @@
-<html>
+<!DOCTYPE html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<html ng-app="myApp">
+
 	<head>
 		<title>Login Page</title>
 	</head>
 	
-<body id="body" background="IIT-Hyderabad-MTech.jpg">
+<body id="body" background="IIT-Hyderabad-MTech.jpg" ng-controller="myCtrl" >
 <style>
 	.menuIdMain {
 		display: none;
@@ -94,28 +98,57 @@
 			<div class="hidden" id="invalid" >
 				<p class="fancy">Invalid credentials!!!</p>
 			</div>
-			<input type="button" id="submit" value="Sign in" name="signIn"  onclick="javascript:validate()" style="margin-right: 6px;">
+			
+			<button ng-click="submit()" id="submit"  name="signIn"  style="margin-right: 6px;">Sign-In</button>
 		 	
 		 	</form>
 		</div>
 	</div>		
 </div>
-<script type="text/javascript">
-function validate()
-{
-    if(   document.getElementById("uid").value == "admin" && document.getElementById("pswrd").value == "admin" )
-    {
-        location.href="admin.html";
-    }
-    else
-    {
-        //alert( "Invalid Credentials" );
-        document.getElementById("invalid").className='unhidden';
-	document.getElementById("uid").value='';
-	document.getElementById("pswrd").value=''; 
-    }
-    
-}
+<script>
+
+var app = angular.module('myApp', []);
+app.controller('myCtrl', function($scope, $http) {
+	$scope.submit = function () {
+	$scope.data = {
+	 	"username":document.getElementById("uid").value,
+		"password":document.getElementById("pswrd").value
+	};
+	 $http({
+	     method: 'POST',
+	     url: 'http://192.168.0.10:8080/validateAdmin',
+	     data : $scope.data,
+	     headers : {
+	     	'Content-Type' : 'application/json; charset=UTF-8'
+	     }
+	  }).then(function (response){
+		$scope.myWelcome = response.data;
+	      //console.log($scope.myWelcome);
+	      if($scope.myWelcome){
+	  	console.log('true');
+	  	location.href="admin.html";
+	  	}
+	  	else{
+	  		console.log('false');
+		  	document.getElementById("invalid").className='unhidden';
+			document.getElementById("uid").value='';
+			document.getElementById("pswrd").value=''; 
+	  	}
+	  },function (error){
+		console.log("Error!!!!");
+	  });
+	 /* if($scope.myWelcome == 'true'){
+	  	console.log('true');
+	  	location.href="admin.html";
+	  }
+	  else{
+	  	console.log('false');
+		  	document.getElementById("invalid").className='unhidden';
+			document.getElementById("uid").value='';
+			document.getElementById("pswrd").value=''; 
+	  }*/
+	}
+});
 </script>
 <script>
 var input1 = document.getElementById("uid");

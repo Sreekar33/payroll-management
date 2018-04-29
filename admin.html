@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<html ng-app="myApp">
 <head>
 <style>
 ul {
@@ -55,6 +56,12 @@ body {
     display: block;
     transition: 0.3s;
 }
+.hidden{
+ 		display:none;
+}
+.unhidden{
+         	display:block;
+}
 .sidenav a:hover {
     color: #f1f1f1;
 }
@@ -74,10 +81,10 @@ body {
 
 </style>
 </head>
-<body>
+<body ng-controller="myCtrl">
 
 <ul>
-  <li><a href="#Add">Add</a></li>
+  <li><a href="#Add" onclick="add()">Add</a></li>
   <li><a href="#Delete">Delete</a></li>
   <li><a href="#Viewall">Viewall</a></li>
   <li><a href="#viewsingle">ViewSingle</a></li>
@@ -91,75 +98,157 @@ function openNav() {
     document.getElementById("mySidenav").style.width = "170px";
     document.getElementById("mySidenav").style.height = "30px";
 }
+function add(){
+    	document.getElementById("main").className='hidden';
+    	document.getElementById("add_form").className='unhidden';
+}
 </script>
 
-
-<div style="position: absolute; middle: 50%; margin-left: 250px; width: 750px; height: 550px; background: grey; border: 8px solid black">
+<!-- add form -->
+<div id=add_form class="hidden" style="position: absolute; middle: 50%; margin-left: 0px; width: 750px; height: 550px; background: grey; border: 8px solid black">
 	<div style="position:absolute;middle:50%;margin-left: 200px;">
-		<form action="/my-handling-form-page" method="post" autocomplete="on">	
-			<input type="text" id="name" placeholder="Name" name="user_name">
+		<form id = "add_form" method="post" autocomplete="on">	
+			Employee id         :   <input type="text" id="Emp_id" placeholder="Name">
+			<br>
+			Employee Name       : <input type="text" id="Emp_name" placeholder="Name">
     			<br>
-    			<div>
-    			<select id="profession" onchange="data();">
+    			E-mail              : <input type="email" id="email_id" placeholder="Name">
+    			<br>
+    			Profession          :<select id="profession" onload="data();" onchange="data();">
     				<option selected disabled>--select one--</option>
     				<option value="Faculty">Faculty</option>
 				<option value="Non-Faculty">Non-faculty</option>
-			</select>
-			</div>
-			
+				</select>
 			<br>
-				<input type="date" id="JoiningDate" value="">
+			Designation         : <input type="email" id="designation" placeholder="Name">
 			<br>
-			<select id="selectLevel" onchange="data1();">
+			Joining Date        : <input type="date" id="JoiningDate" value="">
+			<br>
+			Phd Completion Date :<input type="date" id="phd_comp" placeholder="Name">
+			<br>
+			Level    : <select id="selectLevel" onload="data1();" onchange="data1();">
 				<option selected disabled>Choose a number</option>
 			</select>
-			<select id="Initialpay" >
+			<br>
+			Initial pay :	<select id="Initialpay" >
 				<option selected disabled>Choose a number</option>
 			</select>
-			
-			<script>
-			     function data(){
-			     	console.log("onload");
-				var select = document.getElementById("selectLevel"); 
-				if(document.getElementById("profession").value=="Faculty"){
-					var options = ["10", "11", "12", "13A1", "13A2","14","14A"]; 
-				}
-				else if(document.getElementById("profession").value=="Non-Faculty"){
-					var options = ["1", "2", "3", "4", "5"];
-				}
-				select.innerHTML = "<option selected disabled>Choose a number</option>"
-				// Optional: Clear all existing options first:
-			
-				// Populate list with options:
-				for(var i = 0; i < options.length; i++) {
-				    var opt = options[i];
-				    select.innerHTML += "<option value=\"" + opt + "\">" + opt + "</option>";
-				}
-			    }
-			    function data1(){
-			     	console.log("onload1");
-				var select = document.getElementById("Initialpay"); 
-				if(document.getElementById("selectLevel;").value=="10"){
-					var options = []; //fill salaries
-				}
-				else {
-				}
-				select.innerHTML = "<option selected disabled>Choose a number</option>"
-				// Optional: Clear all existing options first:
-			
-				// Populate list with options:
-				for(var i = 0; i < options.length; i++) {
-				    var opt = options[i];
-				    select.innerHTML += "<option value=\"" + opt + "\">" + opt + "</option>";
-				}
-			    }	
+			<br>
+			<br>
+			<button ng-click="submit()" >submit</button>
+		</form>	 
+			 <script>
+			 	var app = angular.module('myApp', []);
+				app.controller('myCtrl', function($scope, $http) {
+				$scope.submit = function () {
+					$scope.data = {
+					 	"EmployeeId":document.getElementById("Emp_id").value,
+					 	"employeeId" : document.getElementById("Emp_name").value,
+						"emailId" : document.getElementById("email_id").value,
+					 	"profession" : document.getElementById("profession").value,
+					 	"Designation" : document.getElementById("designation").value,
+					 	"joiningDate" : document.getElementById("JoiningDate").value,
+					 	"phdCompletionDate" : document.getElementById("phd_comp").value,
+					 	"postPhdExperience" : document.getElementById("selectLevel").value,
+					 	"initialPay" : document.getElementById("Initialpay").value
+					};
+					 $http({
+					     method: 'POST',
+					     url: 'http://192.168.0.10:8080/validateAdmin',
+					     data : $scope.data,
+					     headers : {
+					     	'Content-Type' : 'application/json; charset=UTF-8'
+					     }
+					  }).then(function (response){
+						$scope.myWelcome = response.data;
+						console.log($scope.myWelcome);
+					  },function (error){
+						console.log("Error!!!!");
+					  });
+					}
+				});
 			</script>
-		</form>
+			<script>
+				function data(){
+				    	console.log("onload");
+					var select = document.getElementById("selectLevel"); 
+					if(document.getElementById("profession").value=="Faculty"){
+					  var options = ["10", "11", "12", "13A1", "13A2","14","14A"]; 
+					}
+					else if(document.getElementById("profession").value=="Non-Faculty"){
+					  var options = ["1", "2", "3", "4", "5","6","7","8","9","10","11","12","13","14","15","16","17"];
+					}
+					select.innerHTML = "<option selected disabled>Choose a number</option>"
+					// Optional: Clear all existing options first:
+				      
+					// Populate list with options:
+					for(var i = 0; i < options.length; i++) {
+					    var opt = options[i];
+					    select.innerHTML += "<option value=\"" + opt + "\">" + opt + "</option>";
+					}
+					  }
+					 function data1(){
+					    console.log("onload1");
+					 console.log(document.getElementById("JoiningDate").value);
+					var select = document.getElementById("Initialpay"); 
+					var options=[];
+					if(document.getElementById("selectLevel").value=="10"){
+					  options = ["98200"]; //fill salaries
+					}
+					else if(document.getElementById("selectLevel").value=="11"){
+					  options = ['98300', '101200', '104200', '107300', '110500', '113800', '117200']; //fill salaries
+					}
+					else if(document.getElementById("selectLevel").value=="12"){
+					  options = ['101500', '104500', '107600', '110800', '114100', '117500', '121000', '124600', '128300', '132100', '136100', '140200', '144400', '148700', '153200', '157800', '162500', '167400']; //fill salaries
+					}
+					else if(document.getElementById("selectLevel").value=="13A1"){
+					  options = ['131400', '135300', '139400', '143600', '147900', '152300', '156900', '161600', '166400', '171400', '176500', '181800', '187300', '192900', '198700', '204700']; //fill salaries
+					}
+					else if(document.getElementById("selectLevel").value=="13A2"){
+					  options = ['139600', '143800', '148100', '152500', '157100', '161800', '166700', '171700', '176900', '182200', '187700', '193300', '199100', '205100', '211300']; //fill salaries
+					}
+					else if(document.getElementById("selectLevel").value=="14"){
+					  options = ['144200', '148500', '153000', '157600', '162300', '167200', '172200', '177400', '182700', '188200', '193800', '199600', '205600', '211800']; //fill salaries
+					}
+					else if(document.getElementById("selectLevel").value=="14A"){
+					  options = ['159100', '163900', '168800', '173900', '179100', '184500', '190000', '195700', '201600', '207600', '213800', '220200']; //fill salaries
+					}
+					else if(document.getElementById("selectLevel").value=="15"){
+					  options = ['182200', '187700', '193300', '199100', '205100', '211300', '217600', '224100']; //fill salaries
+					}
+					select.innerHTML = "<option selected disabled>Choose a number</option>"
+					// Optional: Clear all existing options first:
+				      
+					// Populate list with options:
+					for(var i = 0; i < options.length; i++) {
+					    var opt = options[i];
+					    select.innerHTML += "<option value=\"" + opt + "\">" + opt + "</option>";
+					}
+				} 
+			      </script>
 		
+		
+	</div>
+</div>
+<div id="main" class="unhidden" style="position: absolute; middle: 50%; margin-left: 0px; width: 750px; height: 550px; background: grey; border: 8px solid black">
+	<div style="position:absolute;middle:50%;margin-left: 200px;">
+		<h1>Welcome to IITH Payroll management services</h1>
+		<h2>We are very glad to provide these services</h2>
+		<button onclick="add()">click to add</button>
+		<br>
+		<button>click to delete</button>
+		<br>
+		<button>click to view increments</button>
+		<br>
+		<button>click to view all</button>
+		<br>
+		<button>click to view single</button>	
+		<br>
 	</div>
 </div>
 
 
 </body>
 </html>
+
 
