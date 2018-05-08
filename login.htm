@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-
+<script type="text/javascript"> var ip="192.168.0.17"</script>>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <html ng-app="myApp">
 
@@ -89,7 +89,7 @@
 			<form method="post" style="font:font:81.25%/1 arial,helvetica,sans-serif;border: none;" id="loginForm">
 			<div class="filditem">
 				<div class="email-div row">
-					<input type="email" id="uid" placeholder="User Name"/>
+					<input type="text" id="uid" placeholder="User Name"/>
 				</div>
 				<div class="passwd-div row">
   					<input type="password" placeholder="Password" id="pswrd"/>
@@ -116,7 +116,7 @@ app.controller('myCtrl', function($scope, $http) {
 	};
 	 $http({
 	     method: 'POST',
-	     url: 'http://192.168.0.10:8080/validateAdmin',
+	     url: 'http://'+ip+':8080/validateAdmin',
 	     data : $scope.data,
 	     headers : {
 	     	'Content-Type' : 'application/json; charset=UTF-8'
@@ -126,7 +126,7 @@ app.controller('myCtrl', function($scope, $http) {
 	      //console.log($scope.myWelcome);
 	      if($scope.myWelcome){
 	  	console.log('true');
-	  	location.href="admin.html";
+	  	location.href="index.html";
 	  	}
 	  	else{
 	  		console.log('false');
@@ -137,16 +137,6 @@ app.controller('myCtrl', function($scope, $http) {
 	  },function (error){
 		console.log("Error!!!!");
 	  });
-	 /* if($scope.myWelcome == 'true'){
-	  	console.log('true');
-	  	location.href="admin.html";
-	  }
-	  else{
-	  	console.log('false');
-		  	document.getElementById("invalid").className='unhidden';
-			document.getElementById("uid").value='';
-			document.getElementById("pswrd").value=''; 
-	  }*/
 	}
 });
 </script>

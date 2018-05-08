@@ -1,0 +1,296 @@
+<script>
+ip='192.168.0.17'
+</script>
+<html lang="en" ng-app="myApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Add New</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/animate.css">
+	<link rel="stylesheet" href="css/overwrite.css">
+	<link href="css/animate.min.css" rel="stylesheet"> 
+	<link href="css/style.css" rel="stylesheet" />	
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+  </head>
+  <body ng-controller="myCtrl">
+  	<header class = "header" id="header">
+	<!-- 
+		 <script>
+			var script = document.createElement("script");
+	    	script.type = "text/javascript";
+	    	script.src = "header.js";
+	    	document.getElementsByTagName("head")[0].appendChild(script);
+	      </script> --> 
+		  
+	        <nav class="navbar navbar-fixed-top" role="banner">
+	            <div class="container">
+	                <div class="navbar-header">
+	                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	                        <span class="sr-only">Toggle navigation</span>
+	                        <span class="icon-bar"></span>
+	                        <span class="icon-bar"></span>
+	                        <span class="icon-bar"></span>
+	                    </button>
+	                    <a class="navbar-brand" href="index.html">Pay-Roll<br>Management</a>
+	                </div>				
+	                <div class="collapse navbar-collapse navbar-right">
+	                    <ul class="nav navbar-nav">
+	                        <li><a href="index.html">Home</a></li>
+	                        <li class="active"><a href="Addnew.html">Add new</a></li>
+	                        <li><a href="increment.html">Increments</a></li>
+	                        <li><a href="viewall.html">View all</a></li>
+	                        <li><a href="search.html">Search</a></li> 
+	                                                
+	                    </ul>
+	                </div>
+	            </div>
+	        </nav>		
+	    </header><!--/header-->	
+	    <br>
+	    <br>
+	    <br>
+	    <br>
+	    <br>
+
+
+<div  class="container">
+	<form id = "add_form" method="post" autocomplete="on">
+	<div class="row">
+		<div class="col-md-6">
+			<div class="row">
+				<table>
+					<tbody>
+						<tr>
+							<th>
+								Employee id
+							<br><br></th>
+							<th>
+								&emsp; : &emsp; <input type="text" id="Emp_id" placeholder="Name">
+							<br><br></th>
+						</tr>
+						<tr>
+							<th>
+								Employee Name
+							<br><br></th>
+							<th>
+								&emsp; : &emsp; <input type="text" id="Emp_name" placeholder="Name">
+							<br><br></th>
+						</tr>
+						<tr>
+							<th>
+								E-mail
+							<br><br></th>
+							<th>
+								&emsp; : &emsp; <input type="email" id="email_id" placeholder="Name">
+							<br><br></th>
+						</tr>
+						<tr>
+							<th>
+								Profession
+							<br><br></th>
+							<th>
+								&emsp; : &emsp; <select id="profession" onload="data();" onchange="data();">
+				    				<option selected disabled>--select one--</option>
+				    				<option value="Faculty">Faculty</option>
+									<option value="Non-Faculty">Non-faculty</option>
+								  </select>
+							<br><br></th>
+						</tr>
+						<tr>
+							<th>
+								Designation
+							<br><br></th>
+							<th>
+								&emsp; : &emsp; <input type="text" id="designation" placeholder="Name">
+							<br><br></th>
+						</tr>
+						<tr>
+							<th>
+								Joining Date
+							<br><br></th>
+							<th>
+								&emsp; : &emsp; <input type="date" id="JoiningDate" value="">
+							<br><br></th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="col-md-6">
+			<div class="row">
+				<table>
+					<tbody>
+						<tr>
+							<th>
+								Phd Completion Date
+							<br><br></th>
+							<th>
+								&emsp; : &emsp; <input type="date" id="phd_comp" placeholder="Name">
+							<br><br></th>
+						</tr>
+						<tr>
+							<th>
+								Post Phd Experience
+							<br><br></th>
+							<th>
+								&emsp; : &emsp; <input type="number" id="phd_exp" placeholder="Name">
+							<br><br></th>
+						</tr>
+						<tr>
+							<th>
+								Level
+							<br><br></th>
+							<th>
+								&emsp; : &emsp; <select id="selectLevel" onload="data1(); " onchange="data1();">
+									<option selected disabled>Choose a number</option>
+								</select>
+							<br><br></th>
+						</tr>
+						<tr>
+							<th>
+								Initial Pay
+							<br><br></th>
+							<th>
+								&emsp; : &emsp; <select id="Initialpay" >
+									<option selected disabled>Choose a number</option>
+								</select>
+							<br><br></th>
+						</tr>
+						<tr>
+							<th>
+								Increment
+							</th>
+							<th>
+								&emsp; : &emsp; <select id="increment">
+				    				<option selected disabled>--select one--</option>
+				    				<option value="Jan">Jan</option>
+									<option value="Jul">Jul</option>
+								</select>
+							</th>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="row">
+		<div class="col-md-offset-5">
+			<button class="btn btn-primary" ng-click="submit()" >submit</button>
+		</div>
+	</div>
+	</form>
+</div>
+
+			 <script>
+			 	var app = angular.module('myApp', []);
+				app.controller('myCtrl', function($scope, $http) {
+				$scope.submit = function () {
+					console.log("reddy");
+
+					$scope.data = {
+					 	"employeeId":document.getElementById("Emp_id").value,
+					 	"employeeName" : document.getElementById("Emp_name").value,
+						"emailId" : document.getElementById("email_id").value,
+					 	"profession" : document.getElementById("profession").value,
+					 	"designation" : document.getElementById("designation").value,
+					 	"joiningDate" : document.getElementById("JoiningDate").value,
+					 	"phdCompletionDate" : document.getElementById("phd_comp").value,
+					 	"postPhdExperience" : document.getElementById("phd_exp").value,
+					 	"increment":document.getElementById("increment").value,
+					 	"level":document.getElementById("selectLevel").value,
+					 	"salary" : document.getElementById("Initialpay").value
+					};
+					 $http({
+					     method: 'POST',
+					     
+					     url: 'http://'+ip+':8080/createRecord',
+					     data : $scope.data,
+					     headers : {
+					     	'Content-Type' : 'application/json; charset=UTF-8'
+					     }
+					  }).then(function (response){
+						$scope.myWelcome = response.data;
+						document.getElementById("add_form").reset();
+						console.log($scope.myWelcome);
+					  },function (error){
+						console.log("Error!!!!");
+					  });
+					}
+				});
+			</script>
+			<script>
+				function data(){
+				    	console.log("onload");
+					var select = document.getElementById("selectLevel"); 
+					if(document.getElementById("profession").value=="Faculty"){
+					  var options = ["10", "11", "12", "13A1", "13A2","14","14A"]; 
+					}
+					else if(document.getElementById("profession").value=="Non-Faculty"){
+					  var options = ["1", "2", "3", "4", "5","6","7","8","9","10","11","12","13","14","15","16","17"];
+					}
+					select.innerHTML = "<option selected disabled>Choose a number</option>"
+					// Optional: Clear all existing options first:
+				      
+					// Populate list with options:
+					for(var i = 0; i < options.length; i++) {
+					    var opt = options[i];
+					    select.innerHTML += "<option value=\"" + opt + "\">" + opt + "</option>";
+					}
+					  }
+					 function data1(){
+					    console.log("onload1");
+					 console.log(document.getElementById("JoiningDate").value);
+					var select = document.getElementById("Initialpay"); 
+					var options=[];
+					if(document.getElementById("selectLevel").value=="10"){
+					  options = ["98200"]; //fill salaries
+					}
+					else if(document.getElementById("selectLevel").value=="11"){
+					  options = ['98300', '101200', '104200', '107300', '110500', '113800', '117200']; //fill salaries
+					}
+					else if(document.getElementById("selectLevel").value=="12"){
+					  options = ['101500', '104500', '107600', '110800', '114100', '117500', '121000', '124600', '128300', '132100', '136100', '140200', '144400', '148700', '153200', '157800', '162500', '167400']; //fill salaries
+					}
+					else if(document.getElementById("selectLevel").value=="13A1"){
+					  options = ['131400', '135300', '139400', '143600', '147900', '152300', '156900', '161600', '166400', '171400', '176500', '181800', '187300', '192900', '198700', '204700']; //fill salaries
+					}
+					else if(document.getElementById("selectLevel").value=="13A2"){
+					  options = ['139600', '143800', '148100', '152500', '157100', '161800', '166700', '171700', '176900', '182200', '187700', '193300', '199100', '205100', '211300']; //fill salaries
+					}
+					else if(document.getElementById("selectLevel").value=="14"){
+					  options = ['144200', '148500', '153000', '157600', '162300', '167200', '172200', '177400', '182700', '188200', '193800', '199600', '205600', '211800']; //fill salaries
+					}
+					else if(document.getElementById("selectLevel").value=="14A"){
+					  options = ['159100', '163900', '168800', '173900', '179100', '184500', '190000', '195700', '201600', '207600', '213800', '220200']; //fill salaries
+					}
+					else if(document.getElementById("selectLevel").value=="15"){
+					  options = ['182200', '187700', '193300', '199100', '205100', '211300', '217600', '224100']; //fill salaries
+					}
+					select.innerHTML = "<option selected disabled>Choose a number</option>"
+					// Optional: Clear all existing options first:
+				      
+					// Populate list with options:
+					for(var i = 0; i < options.length; i++) {
+					    var opt = options[i];
+					    select.innerHTML += "<option value=\"" + opt + "\">" + opt + "</option>";
+					}
+				} 
+			</script>
+  </body>
+</html>

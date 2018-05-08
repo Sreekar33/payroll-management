@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script>
+var curView="main";
+</script>
 <html ng-app="myApp">
 <head>
 <style>
@@ -32,7 +35,14 @@ li a:hover {
     background-color: black;
 }
 
-
+tr:hover { 
+   background: red; 
+}
+td a { 
+   display: block; 
+   border: 1px solid black;
+   padding: 16px; 
+}
 body {
     font-family: "Lato", sans-serif;
 }
@@ -85,9 +95,10 @@ body {
 
 <ul>
   <li><a href="#Add" onclick="add()">Add</a></li>
-  <li><a href="#Delete">Delete</a></li>
-  <li><a href="#Viewall">Viewall</a></li>
-  <li><a href="#viewsingle">ViewSingle</a></li>
+  <li><a href="#Delete" onclick="del()">Delete</a></li>
+  <li><a href="#increment" onclick="increment()">Increment</a></li>
+  <li><a href="#Viewall" onclick="viewall()">Viewall</a></li>
+  <li><a href="#viewsingle" onclick="viewsingle()">ViewSingle</a></li>
   
   <lj><img  src = 'search.png' style="width:40px;height:40px;" onclick="openNav()"></lj>
   <lj><input id="mySidenav" type="text" name="q" placeholder="Search" style="width:0px;height:0px;"></lj>
@@ -99,11 +110,47 @@ function openNav() {
     document.getElementById("mySidenav").style.height = "30px";
 }
 function add(){
-    	document.getElementById("main").className='hidden';
+		console.log(curView);
+    	document.getElementById(curView).className='hidden';
+    	curView = "add_form";
+    	document.getElementById("add_form").className='unhidden';
+}
+function del(){
+		console.log(curView);
+    	document.getElementById(curView).className='hidden';
+    	curView = "main";
+    	document.getElementById("main").className='unhidden';
+}
+function increment(){
+		console.log(curView);
+    	document.getElementById(curView).className='hidden';
+    	curView = "main";
+    	document.getElementById("main").className='unhidden';
+}
+function viewall(){
+		console.log(curView);
+    	document.getElementById(curView).className='hidden';
+    	curView = "view_all";
+    	document.getElementById("view_all").className='unhidden';
+ 
+    	var script = document.createElement("script");
+    	script.type = "text/javascript";
+    	script.src = "script.js";
+    	document.getElementsByTagName("head")[0].appendChild(script);
+}
+function viewsingle(){
+		console.log(curView);
+    	document.getElementById(curView).className='hidden';
+    	curView = "add_form";
     	document.getElementById("add_form").className='unhidden';
 }
 </script>
 
+<div id=view_all class="hidden" style="position: absolute; middle: 50%; margin-left: 0px; width: 750px; height: 550px; background: grey; border: 8px solid black">
+	<div style="position:left;middle:50%;margin-left: 200px;">
+	<p id="demo"></p>
+	</div>
+</div>	
 <!-- add form -->
 <div id=add_form class="hidden" style="position: absolute; middle: 50%; margin-left: 0px; width: 750px; height: 550px; background: grey; border: 8px solid black">
 	<div style="position:absolute;middle:50%;margin-left: 200px;">
@@ -120,11 +167,15 @@ function add(){
 				<option value="Non-Faculty">Non-faculty</option>
 				</select>
 			<br>
-			Designation         : <input type="email" id="designation" placeholder="Name">
+			Designation         : <input type="text" id="designation" placeholder="Name">
 			<br>
 			Joining Date        : <input type="date" id="JoiningDate" value="">
 			<br>
 			Phd Completion Date :<input type="date" id="phd_comp" placeholder="Name">
+			<br>
+			Post Phd Experience :<input type="number" id="phd_exp" placeholder="Name">
+			<br>
+
 			<br>
 			Level    : <select id="selectLevel" onload="data1();" onchange="data1();">
 				<option selected disabled>Choose a number</option>
@@ -134,6 +185,12 @@ function add(){
 				<option selected disabled>Choose a number</option>
 			</select>
 			<br>
+				Increment          :<select id="increment" onload="data();" onchange="data();">
+    				<option selected disabled>--select one--</option>
+    				<option value="Jan">Jan</option>
+				<option value="Jul">Jul</option>
+				</select>
+			
 			<br>
 			<button ng-click="submit()" >submit</button>
 		</form>	 
@@ -142,19 +199,21 @@ function add(){
 				app.controller('myCtrl', function($scope, $http) {
 				$scope.submit = function () {
 					$scope.data = {
-					 	"EmployeeId":document.getElementById("Emp_id").value,
-					 	"employeeId" : document.getElementById("Emp_name").value,
+					 	"employeeId":document.getElementById("Emp_id").value,
+					 	"employeeName" : document.getElementById("Emp_name").value,
 						"emailId" : document.getElementById("email_id").value,
 					 	"profession" : document.getElementById("profession").value,
-					 	"Designation" : document.getElementById("designation").value,
+					 	"designation" : document.getElementById("designation").value,
 					 	"joiningDate" : document.getElementById("JoiningDate").value,
 					 	"phdCompletionDate" : document.getElementById("phd_comp").value,
-					 	"postPhdExperience" : document.getElementById("selectLevel").value,
-					 	"initialPay" : document.getElementById("Initialpay").value
+					 	"postPhdExperience" : document.getElementById("phd_exp").value,
+					 	"increment":document.getElementById("increment").value,
+					 	"level":document.getElementById("selectLevel").value,
+					 	"salary" : document.getElementById("Initialpay").value
 					};
 					 $http({
 					     method: 'POST',
-					     url: 'http://192.168.0.10:8080/validateAdmin',
+					     url: 'http://192.168.0.17:8080/createRecord',
 					     data : $scope.data,
 					     headers : {
 					     	'Content-Type' : 'application/json; charset=UTF-8'
@@ -189,7 +248,7 @@ function add(){
 					  }
 					 function data1(){
 					    console.log("onload1");
-					 console.log(document.getElementById("JoiningDate").value);
+					 //console.log(document.getElementById("JoiningDate").value);
 					var select = document.getElementById("Initialpay"); 
 					var options=[];
 					if(document.getElementById("selectLevel").value=="10"){
@@ -216,7 +275,7 @@ function add(){
 					else if(document.getElementById("selectLevel").value=="15"){
 					  options = ['182200', '187700', '193300', '199100', '205100', '211300', '217600', '224100']; //fill salaries
 					}
-					select.innerHTML = "<option selected disabled>Choose a number</option>"
+					//select.innerHTML = "<option selected disabled>Choose a number</option>"
 					// Optional: Clear all existing options first:
 				      
 					// Populate list with options:
@@ -226,8 +285,7 @@ function add(){
 					}
 				} 
 			      </script>
-		
-		
+
 	</div>
 </div>
 <div id="main" class="unhidden" style="position: absolute; middle: 50%; margin-left: 0px; width: 750px; height: 550px; background: grey; border: 8px solid black">

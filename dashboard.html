@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Dashboard</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/angular.js"></script>
+
+    <script>
+        var app = angular.module("myApp" , []);
+        app.controller("Control" , cntrl);
+
+        function cntrl($scope , $http) {
+            $http.get("http://52.11.242.228:8080/api/public/getVeekli")
+                .then(function(response) {
+                    $scope.resValue = response.data;
+                });
+        }
+    </script>
+    <style>
+        #records {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #records td, #users th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #records tr:nth-child(even){background-color: #f2f2f2;}
+
+        #records tr:hover {background-color: #ddd;}
+
+        #records th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+
+  </head>
+  <body ng-app="myApp" ng-controller="Control">
+    <p><br/><br/></p>
+    <div class="container">
+        <table id = "records">
+            <thead>
+                <tr>
+                    <th>Email-Id</th>
+                    <th>CleanseHigh</th>
+                    <th>Fitalicious</th>
+                    <th>FreshChops</th>
+                    <th>Snackishq</th>
+                    <th>Feedback</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="record in resValue">
+                    <td> {{ record.email }} </td>
+                    <td ng-repeat="product in record.veekliProducts">
+                        {{product.rating}}
+                    </td>
+                    <td> {{ record.feedBack }} </td>
+                </tr>
+            </tbody>
+        <table>
+    </div>
+  </body>
+</html>
